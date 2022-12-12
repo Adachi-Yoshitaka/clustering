@@ -55,6 +55,14 @@ class ClusterNode(object):
     # 左右の子ノードを再帰的に描画する
     self.left.draw(draw,x+ll,top+h1,s,imlist,im)
     self.right.draw(draw,x+ll,bottom-h2,s,imlist,im)
+    
+  def extract_clusters_by_num(self, num):
+    """ Extract list of sub-tree clusters from
+    hcluster tree with count<num. """
+
+    if self.count < num:
+      return [self]
+    return self.left.extract_clusters_by_num(num) + self.right.extract_clusters_by_num(num)
 
 class ClusterLeafNode(object):
   def __init__(self,vec,id):
