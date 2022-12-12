@@ -4,6 +4,7 @@
 from numpy import *
 import matplotlib.pyplot as plt
 from itertools import combinations
+from itertools import product
 
 class ClusterNode(object):
   def __init__(self,vec,left,right,distance=0.0,count=1):
@@ -83,8 +84,20 @@ class ClusterLeafNode(object):
 def L2dist(v1,v2):
   return sqrt(sum((v1-v2)**2))
 
+def L2dist_single(v1, v2):
+    return min([sqrt(sum((a-b)**2)) for a, b in product(v1, v2)])
+
+def L2dist_complete(v1, v2):
+    return max([sqrt(sum((a-b)**2)) for a, b in product(v1, v2)])
+
 def L1dist(v1,v2):
   return sum(abs(v1-v2))
+
+def L1dist_single(v1, v2):
+    return min([sum(abs(a-b)) for a, b in product(v1, v2)])
+
+def L1dist_complete(v1, v2):
+    return max([sum(abs(a-b)) for a, b in product(v1, v2)])
 
 def hcluster(features,distfcn=L2dist):
   """ 特徴量の並びを階層クラスタリングする """
@@ -115,7 +128,7 @@ def hcluster(features,distfcn=L2dist):
 
     # 新しいノードを生成する
     new_node = ClusterNode(new_vec,left=ni,right=nj,
-                           distance=closest)
+                           distance=closest,count=cnt)
     node.remove(ni)
     node.remove(nj)
     node.append(new_node)
