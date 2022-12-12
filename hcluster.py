@@ -136,7 +136,7 @@ def hcluster(features,distfcn=L2dist):
 
     # 新しいノードを生成する
     new_node = ClusterNode(new_vec,left=ni,right=nj,
-                           distance=closest,count=cnt)
+                           distance=closest,count=count)
     node.remove(ni)
     node.remove(nj)
     node.append(new_node)
